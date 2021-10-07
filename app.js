@@ -1,8 +1,14 @@
 const express = require('express');
+
+
 const  bodyParser = require('body-parser');
 const  mongoose = require('mongoose');
+
+const contactRoutes = require("./api-routes/contactRoutes"):
+const apiRutes = require("./api-routes/apiRoutes");
+
 const app = express();
-let apiRoutes = require("./api-routes"):
+
 app.use(bodyParser.urlencoded({
   extended: true
 }));
