@@ -10,23 +10,23 @@ function getContact(req, res) {
     if (err) {
       return res.status(400).send(err.message);
     }
-    return res.send(ContactData);
+    return res.status(200).send(ContactData);
   });
 }
-function getContactUser(req, res) {
-  const { ContactUser } = req.params;
+function getContactbyUser(req, res) {
+  const { ContactUser } = req.params.id;
 
-  Contact.find({ user: ContactUser }, (err, ContactData) => {
+  Contact.findById({ user: ContactUser }, (err, ContactData) => {
     if (err) {
       return res.status(400).send(err.message);
     }
-    return res.send(ContactData);
+    return res.status(200).send(ContactUser);
   });
 }
 
 // post
-function postContact(req, res){
-      /* Coge el request.body con los atributos introducidos y lo guarda save() */
+function postContact(req, res) {
+  /* Coge el request.body con los atributos introducidos y lo guarda save() */
 
   const auxcontact = new Contact(req.body);
 
@@ -34,9 +34,37 @@ function postContact(req, res){
     if (err) return res.status(400).send({ message: 'Error al guardar el contacto', error: err });
     return res.status(200).send(newContact);
   });
-} 
 }
+ function updateContacts(req, res) {
+   Contact.findById(req.params.id, (err,user) => {
+    user.name = req.body.name;
+    user.surname = req.body.surname;
+    user.email = req.body.email;
+    user.age = req.body.age;
+    user.password = req.body.password; 
+    user.phone = req.body.phone
 
+    Contact.save((err, newContact) => {
+      if (err) return res.status(400).send(error);
+      return res.status(200).send(newUser);
+    });
+  });
+}
+} 
+
+function deleteUsers(req, res) {
+  User.findById(req.params.id, (err, user) => {
+    user.remove((err) => {
+      if (err) return res.status(400).send(err.message);
+      res.status(200).send();
+    });
+  });
+}
 module.exports = {
-  index, getContact, getContactbyUser, postContact
+  index,  
+  getContact,
+  getContactbyUser,
+  postContact,
+  deleteUsers,
+  updateContacts,
 };
