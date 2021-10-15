@@ -1,12 +1,14 @@
 const { Router } = require('express');
-const router = require('express').Router();
 const contactController = require('../controllers/contactController');
 
-router.get('/', contactController.index);
-router.get('/api', contactController.getContact);
-router.get('/api:users', contactController.getContactbyUser);
+const router = Router();
+
+// router.get('/', contactController.index);
+router.get('/', contactController.getContact);
+router.get('/:userID', contactController.getContactbyUser);
 // router.post('/api', contactController.newContact);
-router.post('/api', contactController.postContact);
-router.post('/api/:users', contactController.updateContacts);
-router.delete('/api/:contactsremove', contactController.deleteUsers);
+router.post('/', contactController.postContact);
+router.put('/:userID', contactController.updateContacts);
+router.delete('/:userID', contactController.deleteUsers);
+
 module.exports = router;
